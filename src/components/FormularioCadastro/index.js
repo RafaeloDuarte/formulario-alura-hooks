@@ -1,36 +1,43 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import DadosEntrega from "../DadosEntrega"
 import DadosPessoais from "../DadosPessoais"
 import DadosUsuario from "../DadosUsuario"
+import { Step, StepLabel, Stepper, Typography } from "@material-ui/core";
 
 function FormularioCadastro({ aoEnviar, validarCPF }) {
 
   const [formStep, setFormStep] = useState(0)
+  const [dadosColetados, setDados] = useState({})
+
+  useEffect(() => {
+    if (formStep === forms.length-1)
+      aoEnviar(dadosColetados)
+  })
+
   const forms = [
-    <DadosUsuario aoEnviar={nextStep} validarCPF={validarCPF}/>,
-    <DadosPessoais aoEnviar={nextStep} />,
-    <DadosEntrega aoEnviar={aoEnviar} />
+    <DadosUsuario aoEnviar={dataCollect} />,
+    <DadosPessoais aoEnviar={dataCollect} validarCPF={validarCPF} />,
+    <DadosEntrega aoEnviar={dataCollect} />,
+    <Typography variant='h5'>Obrigado pelo cadastro</Typography>
   ]
 
   function nextStep() {
     setFormStep(formStep + 1)
   }
 
-  function getFormStep(step) {
-    switch (step) {
-      case 0:
-        return (<DadosUsuario aoEnviar={nextStep} validarCPF={validarCPF}/>)
-      case 1:
-        return (<DadosPessoais aoEnviar={nextStep} />)
-      case 2:
-        return (<DadosEntrega aoEnviar={aoEnviar} />)
-      default:
-        return
-    }
+  function dataCollect(dados) {
+    setDados({ ...dadosColetados, ...dados })
+    nextStep()
   }
 
   return (
     <>
+      <Stepper activeStep={formStep}>
+        <Step><StepLabel>Login</StepLabel></Step>
+        <Step><StepLabel>Dados Usuário</StepLabel></Step>
+        <Step><StepLabel>Dados de Entrega</StepLabel></Step>
+        <Step><StepLabel>Finalização</StepLabel></Step>
+      </Stepper>
       {forms[formStep]}
     </>
   )
