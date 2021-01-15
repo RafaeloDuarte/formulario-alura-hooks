@@ -4,19 +4,19 @@ import DadosPessoais from "../DadosPessoais"
 import DadosUsuario from "../DadosUsuario"
 import { Step, StepLabel, Stepper, Typography } from "@material-ui/core";
 
-function FormularioCadastro({ aoEnviar, validarCPF }) {
+function FormularioCadastro({ aoEnviar, validacoes }) {
 
   const [formStep, setFormStep] = useState(0)
   const [dadosColetados, setDados] = useState({})
 
   useEffect(() => {
-    if (formStep === forms.length-1)
+    if (formStep === forms.length - 1)
       aoEnviar(dadosColetados)
   })
 
   const forms = [
-    <DadosUsuario aoEnviar={dataCollect} />,
-    <DadosPessoais aoEnviar={dataCollect} validarCPF={validarCPF} />,
+    <DadosUsuario aoEnviar={dataCollect}/>,
+    <DadosPessoais aoEnviar={dataCollect} />,
     <DadosEntrega aoEnviar={dataCollect} />,
     <Typography variant='h5'>Obrigado pelo cadastro</Typography>
   ]
