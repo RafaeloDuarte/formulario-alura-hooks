@@ -4,7 +4,7 @@ import DadosPessoais from "../DadosPessoais"
 import DadosUsuario from "../DadosUsuario"
 import { Step, StepLabel, Stepper, Typography } from "@material-ui/core";
 
-function FormularioCadastro({ aoEnviar, validacoes }) {
+function FormularioCadastro({ aoEnviar }) {
 
   const [formStep, setFormStep] = useState(0)
   const [dadosColetados, setDados] = useState({})
